@@ -29,30 +29,30 @@ public class TapParser {
     public List<Trip> getTrips(List<Tap> taps) {
         List<Trip> result = new ArrayList<>();
         
-        Map<String, LinkedList<Tap>> customerTaps = createCustomTaps(taps);
+        Map<String, LinkedList<Tap>> customerTapsMap = createCustomerTapsMap(taps);
 
-        for (String customer : customerTaps.keySet()) {
-            LinkedList<Tap> customerTapsForCustomer = customerTaps.get(customer);
-            result.addAll(createTripsForCustomerTaps(customerTapsForCustomer));
+        for (String customer : customerTapsMap.keySet()) {
+            LinkedList<Tap> customerTaps = customerTapsMap.get(customer);
+            result.addAll(createTripsForCustomerTaps(customerTaps));
         }
 
         return result;
     }
 
-    private List<Trip> createTripsForCustomerTaps(LinkedList<Tap> customerTapsForCustomer) {
+    private List<Trip> createTripsForCustomerTaps(LinkedList<Tap> customerTaps) {
         List<Trip> result = new ArrayList<>();
         // the TAP_COMPARATOR ensures it is sorted by the non-customer values. The main value
         // being DateTimeUTC
-        customerTapsForCustomer.sort(TAP_COMPARATOR);
+        customerTaps.sort(TAP_COMPARATOR);
 
-        Tap tap = customerTapsForCustomer.pollFirst();
+        Tap tap = customerTaps.pollFirst();
         while (tap != null) {
             final Tap tapFinal = tap;
 
-            calculatePairing(customerTapsForCustomer, () -> result.add(tripCalculator.createIncompletedTrip(tapFinal)),
+            calculatePairing(customerTaps, () -> result.add(tripCalculator.createIncompletedTrip(tapFinal)),
                     (t) -> result.add(tripCalculator.calculate(tapFinal, t)));
 
-            tap = customerTapsForCustomer.pollFirst();
+            tap = customerTaps.pollFirst();
         }
 
         return result;
@@ -69,7 +69,7 @@ public class TapParser {
         }
     }
 
-    private Map<String, LinkedList<Tap>> createCustomTaps(List<Tap> taps) {
+    private Map<String, LinkedList<Tap>> createCustomerTapsMap(List<Tap> taps) {
         Map<String, LinkedList<Tap>> customerTaps = new HashMap<>();
 
         for (Tap tap : taps) {
