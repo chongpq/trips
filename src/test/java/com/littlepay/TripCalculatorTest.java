@@ -19,7 +19,7 @@ class TripCalculatorTest {
         Tap start = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap end = new Tap("2", FORMATTER.parse("22-01-2023 13:30:00", LocalDateTime::from), TapType.OFF, "Stop3", "Company1", "Bus37", "5500005555555559");
 
-        Trip trip = classUnderTest.calculate(start, end);
+        Trip trip = classUnderTest.createTrip(start, end);
 
         assertEquals(of(2023,1,22,13,0,0), trip.started());
         assertEquals(of(2023,1,22,13,30,0), trip.finished());
@@ -60,7 +60,7 @@ class TripCalculatorTest {
         Tap start = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap end = new Tap("2", FORMATTER.parse("22-01-2023 13:00:05", LocalDateTime::from), TapType.OFF, "Stop1", "Company1", "Bus37", "5500005555555559");
 
-        Trip trip = classUnderTest.calculate(start, end);
+        Trip trip = classUnderTest.createTrip(start, end);
 
         assertEquals(of(2023,1,22,13,0,0), trip.started());
         assertEquals(of(2023,1,22,13,0,5), trip.finished());

@@ -15,7 +15,7 @@ public class TripCalculator {
         this.completedTripCosts = completedTripCosts;
     }
 
-    public Trip calculate(Tap start, Tap end) {
+    public Trip createTrip(Tap start, Tap end) {
         Long duration = Duration.between(start.dateTimeUTC(), end.dateTimeUTC()).getSeconds();
         TripStatus status = start.stopId().equals(end.stopId()) ? TripStatus.CANCELLED : TripStatus.COMPLETED;
         BigDecimal chargeAmount = completedTripCosts.get(start.stopId(), end.stopId());

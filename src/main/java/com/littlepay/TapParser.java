@@ -44,7 +44,7 @@ public class TapParser {
             final Tap tapFinal = tap;
 
             calculatePairing(customerTaps, () -> result.add(tripCalculator.createIncompletedTrip(tapFinal)),
-                    (t) -> result.add(tripCalculator.calculate(tapFinal, t)));
+                    (t) -> result.add(tripCalculator.createTrip(tapFinal, t)));
 
             tap = customerTaps.pollFirst();
         }

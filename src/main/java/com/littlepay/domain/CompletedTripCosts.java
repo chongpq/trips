@@ -21,8 +21,11 @@ public class CompletedTripCosts {
     }
 
     public BigDecimal get(String start, String end) {
-        if (!STOP_ID_MAP.containsKey(start) || !STOP_ID_MAP.containsKey(end)) {
-            throw new IllegalArgumentException("Invalid StopId");
+        if (!STOP_ID_MAP.containsKey(start)) {
+            throw new IllegalArgumentException("Invalid stopId " + start);
+        }
+        if (!STOP_ID_MAP.containsKey(end)) {
+            throw new IllegalArgumentException("Invalid stopId " + end);
         }
 
         return tripCosts[STOP_ID_MAP.get(start)][STOP_ID_MAP.get(end)];

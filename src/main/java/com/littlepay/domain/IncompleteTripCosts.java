@@ -18,7 +18,7 @@ public class IncompleteTripCosts {
 
     public BigDecimal get(String stopId) {
         if (!STOP_ID_MAP.containsKey(stopId)) {
-            throw new IllegalArgumentException("Invalid stopId");
+            throw new IllegalArgumentException("Invalid stopId " + stopId);
         }
         return tripCosts[STOP_ID_MAP.get(stopId)];
     }

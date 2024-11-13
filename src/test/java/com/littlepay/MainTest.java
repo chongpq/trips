@@ -27,7 +27,7 @@ class MainTest {
     }
 
     @Test
-    void main() {
+    void testMain() {
         Path resourceDirectory = Paths.get("src","test","resources","taps.csv");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
         String[] args = { absolutePath };
