@@ -10,15 +10,9 @@ import java.util.function.Supplier;
 
 public class TapParser {
 
-    private static final Comparator<Tap> TAP_COMPARATOR = (o1, o2) -> {
-        if (!o1.dateTimeUTC().isEqual(o2.dateTimeUTC())) {
-            return o1.dateTimeUTC().compareTo(o2.dateTimeUTC());
-        } else if (!o1.stopId().equals(o2.stopId())) {
-            return o1.stopId().compareTo(o2.stopId());
-        } else {
-            return o1.tapType().compareTo(o2.tapType());
-        }
-    };
+    private static final Comparator<Tap> TAP_COMPARATOR = Comparator.comparing(Tap::dateTimeUTC)
+            .thenComparing(Tap::stopId)
+            .thenComparing(Tap::tapType);
     
     private final TripCalculator tripCalculator;
 

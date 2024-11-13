@@ -25,9 +25,9 @@ public class TripCalculator {
                 start.busID(), start.PAN(), status);
     }
 
-    public Trip createIncompletedTrip(Tap start) {
-        return new Trip(start.dateTimeUTC(), null, null, start.stopId(),
-                null, incompleteTripCosts.get(start.stopId()), start.companyId(),
-                start.busID(), start.PAN(), TripStatus.INCOMPLETED);
+    public Trip createIncompletedTrip(Tap tap) {
+        return new Trip(tap.dateTimeUTC(), null, null, tap.stopId(),
+                null, incompleteTripCosts.get(tap.stopId()), tap.companyId(),
+                tap.busID(), tap.PAN(), TripStatus.INCOMPLETED);
     }
 }
