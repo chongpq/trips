@@ -19,7 +19,7 @@ This project was rather small, so I chose not to use Mockito, seeing as I got 94
 ## Design
 The major observation is that Completed Trip Costs can be represented by a 2D array and the Incomplete Trip Costs can be represented by a normal array. They are currently in-memory arrays in CompletedTripCosts.java and IncompleteTripCosts.java.
 
-In a proper system they can be replaced by a SQL or noSQL service (if we need an immediate update), or by a S3 file and a redeploy, depending on requirements i.e. if time is not a factor. Obviously the interface to the new Completed Trip Costs and Incomplete Trips Cost, the STOP_ID_MAP map will need to be updated or replaced. 
+In a proper system they can be replaced by a SQL or noSQL service (if we need an immediate update), or by a S3 file and a redeploy, depending on requirements i.e. if time is not a factor. Obviously the interface to the new Completed Trip Costs and Incomplete Trips Costs, the STOP_ID_MAP map will need to be updated or replaced. 
 
 The TapParser take the taps and subdivides them into customers. Customers being a PAN, busId and companyId combo. We then go over each of these subdivisions and create Trips out of them.
 
