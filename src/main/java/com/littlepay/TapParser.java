@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public class TapParser {
 
-    private static final Comparator<Tap> TAP_COMPARATOR = Comparator.comparing(Tap::dateTimeUTC)
+    static final Comparator<Tap> TAP_COMPARATOR = Comparator.comparing(Tap::dateTimeUTC)
             .thenComparing(Tap::stopId)
             .thenComparing(Tap::tapType);
     
@@ -29,6 +29,8 @@ public class TapParser {
             LinkedList<Tap> customerTaps = customerTapsMap.get(customer);
             result.addAll(createTripsForCustomerTaps(customerTaps));
         }
+
+        result.sort(Comparator.comparing(Trip::started));
 
         return result;
     }

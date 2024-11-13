@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TapMapperTest {
 
     @Test
-    void stringToTapMapper() {
+    void test_StringToTapMapper() {
         String input = "1, 22-01-2018 13:00:00, ON, Stop1, Company1, Bus37, 5500005555555559";
 
         Tap tap = TapMapper.StringToTapMapper(input);

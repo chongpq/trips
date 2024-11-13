@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TripCalculatorTest {
 
     @Test
-    void completeTripCosts() {
+    void test_completeTrip() {
         CompletedTripCosts completedTripCosts = new CompletedTripCosts();
         TripCalculator classUnderTest = new TripCalculator(null, completedTripCosts);
         Tap start = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
@@ -34,7 +34,7 @@ class TripCalculatorTest {
     }
 
     @Test
-    void incompleteTripCosts() {
+    void test_incompleteTrip() {
         IncompleteTripCosts incompleteTripCosts = new IncompleteTripCosts();
         TripCalculator classUnderTest = new TripCalculator(incompleteTripCosts, null);
         Tap start = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
@@ -54,7 +54,7 @@ class TripCalculatorTest {
     }
 
     @Test
-    void cancelledTripWorks() {
+    void test_cancelledTrip() {
         CompletedTripCosts completedTripCosts = new CompletedTripCosts();
         TripCalculator classUnderTest = new TripCalculator(null, completedTripCosts);
         Tap start = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");

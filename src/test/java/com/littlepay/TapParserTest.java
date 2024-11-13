@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TapParserTest {
 
-
     private TapParser tapParser;
 
     @BeforeEach
@@ -26,7 +25,7 @@ class TapParserTest {
     }
 
     @Test
-    void emptyTapList() {
+    void test_emptyTapList() {
         List<Tap> taps = Collections.emptyList();
 
         List<Trip> trips = tapParser.getTrips(taps);
@@ -35,7 +34,7 @@ class TapParserTest {
     }
 
     @Test
-    void oneTap_INCOMPLETED() {
+    void test_one_Tap_produces_INCOMPLETED() {
         Tap tap = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
 
         List<Tap> taps = List.of(tap);
@@ -58,7 +57,7 @@ class TapParserTest {
     }
 
     @Test
-    void twoTaps_COMPLETED() {
+    void test_two_Taps_produces_COMPLETED() {
         Tap tap = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap tap2 = new Tap("2", FORMATTER.parse("22-01-2023 13:30:00", LocalDateTime::from), TapType.OFF, "Stop3", "Company1", "Bus37", "5500005555555559");
 
@@ -82,7 +81,7 @@ class TapParserTest {
     }
 
     @Test
-    void twoTaps_CANCELLED() {
+    void test_two_Taps_produces_CANCELLED() {
         Tap tap = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap tap2 = new Tap("2", FORMATTER.parse("22-01-2023 13:30:00", LocalDateTime::from), TapType.OFF, "Stop1", "Company1", "Bus37", "5500005555555559");
 
@@ -106,7 +105,7 @@ class TapParserTest {
     }
 
     @Test
-    void MultiPANs() {
+    void test_MultiPANs() {
         Tap tap = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap tap2 = new Tap("2", FORMATTER.parse("22-01-2023 13:30:00", LocalDateTime::from), TapType.OFF, "Stop3", "Company1", "Bus37", "5500005555555559");
         Tap tap3 = new Tap("3", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "4111111111111111");
@@ -156,7 +155,7 @@ class TapParserTest {
     }
 
     @Test
-    void INCOMPLETED_first_then_process_the_rest() {
+    void test_INCOMPLETED_first_then_the_rest() {
         Tap tap = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap tap2 = new Tap("2", FORMATTER.parse("22-01-2023 13:30:00", LocalDateTime::from), TapType.ON, "Stop3", "Company1", "Bus37", "5500005555555559");
         Tap tap3 = new Tap("3", FORMATTER.parse("22-01-2023 13:40:00", LocalDateTime::from), TapType.OFF, "Stop3", "Company1", "Bus37", "5500005555555559");
@@ -194,7 +193,7 @@ class TapParserTest {
     }
 
     @Test
-    void INCOMPLETED_last_first_process_the_rest() {
+    void test_INCOMPLETED_last_and_process_the_others_initially() {
         Tap tap = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
         Tap tap2 = new Tap("2", FORMATTER.parse("22-01-2023 13:30:00", LocalDateTime::from), TapType.ON, "Stop3", "Company1", "Bus37", "5500005555555559");
         Tap tap3 = new Tap("3", FORMATTER.parse("22-01-2023 13:40:00", LocalDateTime::from), TapType.OFF, "Stop3", "Company1", "Bus37", "5500005555555559");
@@ -229,5 +228,15 @@ class TapParserTest {
         assertEquals("Bus37", trip.busID());
         assertEquals("5500005555555559", trip.PAN());
         assertEquals(TripStatus.CANCELLED, trip.status());
+    }
+
+    @Test
+    void test_TAP_COMPARATOR_TAP_TYPE() {
+        Tap on = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.ON, "Stop1", "Company1", "Bus37", "5500005555555559");
+        Tap off = new Tap("1", FORMATTER.parse("22-01-2023 13:00:00", LocalDateTime::from), TapType.OFF, "Stop1", "Company1", "Bus37", "5500005555555559");
+
+        assertEquals(-1, TapParser.TAP_COMPARATOR.compare(on, off));
+        assertEquals(0, TapParser.TAP_COMPARATOR.compare(on, on));
+        assertEquals(1, TapParser.TAP_COMPARATOR.compare(off, on));
     }
 }
