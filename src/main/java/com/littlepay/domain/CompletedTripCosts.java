@@ -13,7 +13,7 @@ public class CompletedTripCosts {
     };
 
     /**
-     *  This is a in-memory version of completed trip costs
+     *  This is an in-memory version of completed trip costs
      *  we could read from a configuration file to setup <code>BigDecimal[][] tripCosts</code>
      */
     public CompletedTripCosts() {
